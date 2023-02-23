@@ -12,8 +12,16 @@ export class CreateUserComponent {
     "name":"",
     "email":"",
     "password":"",
+    "confirmpassword":""
   }
+  showError = false
+  errorMessage = ""
   createUser() {
-    this.http.post("http://localhost:3000/api/createUser", this.user);
+    this.http.post("http://localhost:3000/auth/register", this.user).subscribe((data: any) => {
+
+    }, (err) => {
+      this.showError=true;
+      this.errorMessage= err.errorMessage
+    });
   }
 }

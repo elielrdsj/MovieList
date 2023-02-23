@@ -11,5 +11,12 @@
         <mat-label>Password</mat-label>
         <input matInput type="password" [(ngModel)]="user.password">
     </mat-form-field>
+    <mat-form-field>
+        <mat-label>Confirm password</mat-label>
+        <input matInput type="password" [(ngModel)]="user.confirmpassword">
+    </mat-form-field>
     <button mat-button (click)="createUser()">Create User</button>
+    <mat-error *ngIf="showError">
+        {{errorMessage}}
+    </mat-error>
 </div>

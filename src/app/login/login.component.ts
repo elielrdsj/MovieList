@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, ErrorHandler } from '@angular/core';
+import { Component, ErrorHandler, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -9,13 +9,17 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
+  @ViewChild(RouterOutlet) outlet!: RouterOutlet
   router: Router = new Router();
   constructor(private http:HttpClient){}
-  formData!:FormGroup
+  user = {
+    "email": "",
+    "password": ""
+  }
   showError = false;
   
   logIn(){
-    this.http.post("http://localhost:3000/api/login", this.formData).subscribe((data: any) => {
+    this.http.post("http://localhost:3000//auth/login", this.user).subscribe((data: any) => {
       sessionStorage.setItem("jwt", data);
       if (data) {
         this.showError = false;
