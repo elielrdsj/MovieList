@@ -1,0 +1,70 @@
+<app-header />
+<div class="card">
+  <div class="row">
+    <div class="col-2">
+      <div class="dataTables_length"><label>Show
+          <mat-form-field>
+            <mat-select [(value)]="size" [(ngModel)]="filterObj.PageSize" (change)="getAllMovies()">
+              <mat-option value="5">5</mat-option>
+              <mat-option value="10">10</mat-option>
+              <mat-option value="20">20</mat-option>
+              <mat-option value="50">50</mat-option>
+              <mat-option value="100">100</mat-option>
+            </mat-select>
+          </mat-form-field> entries
+        </label>
+        <div>
+          <mat-form-field>
+            <mat-label>Filter by name</mat-label>
+            <input matInput type="text" class="form-control" value="" [(ngModel)]="filterObj.name">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-select [(value)]="filterObj.sort" (valueChange)="getAllMovies()">
+              <mat-option value="name">Name</mat-option>
+              <mat-option value="year">Year</mat-option>
+              <mat-option value="rating">Rating</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-select [(value)]="filterObj.sortOrder" (valueChange)="getAllMovies()">
+              <mat-option value="asc">Ascending</mat-option>
+              <mat-option value="desc">Descending</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-10" style="float:right;text-align: right">
+      <div class="pagination">
+        <div>
+          <div class="btn-group" id="radioBtn">
+            <button mat-button (click)="onPrevious()">Previous</button>
+            <button mat-button>{{filterObj.PageNumber}}</button>
+            <button mat-button (click)="onForward()">Next</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <table mat-table [dataSource]="movies.movies">
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let movie">{{movie.name}}</td>
+    </ng-container>
+    <ng-container matColumnDef="year">
+      <th mat-header-cell *matHeaderCellDef>Year of Release</th>
+      <td mat-cell *matCellDef="let movie">{{movie.year}}</td>
+    </ng-container>
+    <ng-container matColumnDef="genre">
+      <th mat-header-cell *matHeaderCellDef>Genres</th>
+      <td mat-cell *matCellDef="let movie">{{movie.genre.toString()}}</td>
+    </ng-container>
+    <ng-container matColumnDef="rating">
+      <th mat-header-cell *matHeaderCellDef>Rating</th>
+      <td mat-cell *matCellDef="let movie">{{movie.rating}}</td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>
